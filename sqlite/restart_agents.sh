@@ -24,8 +24,8 @@ fi
 if [ "${GROUP}" = "codex" ]; then
     screen -S "sqlite-agent-3" -X quit >/dev/null 2>&1 || true
     screen -S "sqlite-agent-4" -X quit >/dev/null 2>&1 || true
-    screen -dmS "sqlite-agent-3" bash -c "AGENT_ID=3 AGENT_LABEL=codex AGENT_MODEL=gpt-5.3-codex AGENT_COMMAND='codex exec -c model_reasoning_effort=high --yolo --model \"\$AGENT_MODEL\" \"\$PROMPT_TEXT\"' PROMPT_PATH='${AGENT_PROMPT}' '${WORKSPACE_ROOT}/agent_loop.sh'"
-    screen -dmS "sqlite-agent-4" bash -c "AGENT_ID=4 AGENT_LABEL=codex AGENT_MODEL=gpt-5.3-codex AGENT_COMMAND='codex exec -c model_reasoning_effort=high --yolo --model \"\$AGENT_MODEL\" \"\$PROMPT_TEXT\"' PROMPT_PATH='${AGENT_PROMPT}' '${WORKSPACE_ROOT}/agent_loop.sh'"
+    screen -dmS "sqlite-agent-3" bash -c "AGENT_ID=3 AGENT_LABEL=codex AGENT_MODEL=gpt-5.3-codex AGENT_COMMAND='codex exec --yolo --model \"\$AGENT_MODEL\" \"\$PROMPT_TEXT\"' PROMPT_PATH='${AGENT_PROMPT}' '${WORKSPACE_ROOT}/agent_loop.sh'"
+    screen -dmS "sqlite-agent-4" bash -c "AGENT_ID=4 AGENT_LABEL=codex AGENT_MODEL=gpt-5.3-codex AGENT_COMMAND='codex exec --yolo --model \"\$AGENT_MODEL\" \"\$PROMPT_TEXT\"' PROMPT_PATH='${AGENT_PROMPT}' '${WORKSPACE_ROOT}/agent_loop.sh'"
     exit 0
 fi
 
