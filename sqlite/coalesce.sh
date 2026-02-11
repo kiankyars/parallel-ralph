@@ -46,6 +46,6 @@ mkdir -p agent_logs
 LOG="agent_logs/coalesce_$(date +%s).log"
 
 echo "[$(date)] Coalesce agent start"
-gemini --prompt "$(cat "${COALESCE_PROMPT}")" --model gemini-3-flash-preview \
+gemini --prompt "$(cat "${COALESCE_PROMPT}")" --model gemini-3-flash-preview --yolo \
     >> "${LOG}" 2>&1
 echo "[$(date)] Coalesce agent end (see ${LOG})"

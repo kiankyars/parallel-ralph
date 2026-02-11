@@ -1,6 +1,6 @@
-# Coalesce Agent (one-shot)
+# Coalesce Agent
 
-You are doing a single cleanup run on this codebase.
+You are doing a cleanup run on this codebase.
 
 ## Workflow
 
@@ -25,6 +25,6 @@ You are doing a single cleanup run on this codebase.
 
 ## Constraints
 
-- One or a few commits. Do not change behavior; run tests and fix any regressions.
+- Do not change behavior; run tests and fix any regressions.
 - Prefer moving over rewriting. Leave the repo buildable and tests passing.
 - Keep changes scoped.
