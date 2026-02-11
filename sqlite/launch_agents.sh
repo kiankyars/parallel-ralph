@@ -2,7 +2,7 @@
 # launch_agents.sh
 # 1) Run one bootstrap agent once.
 # 2) Wait until bootstrap artifacts are visible on origin/main.
-# 3) Launch 4 workers: 2 Claude Opus 4.6 + 2 Codex 5.3.
+# 3) Launch 6 workers: 2 Claude Opus 4.6 + 2 Codex 5.3 + 2 Gemini 3 Pro.
 
 # Enable unset variable detection: script will exit if any variable is referenced before being set.
 set -u
@@ -63,7 +63,9 @@ screen -dmS "sqlite-agent-1" bash -c "AGENT_ID=1 AGENT_LABEL=claude AGENT_MODEL=
 screen -dmS "sqlite-agent-2" bash -c "AGENT_ID=2 AGENT_LABEL=claude AGENT_MODEL=claude-opus-4-6 AGENT_COMMAND='claude --dangerously-skip-permissions -p \"\$PROMPT_TEXT\" --model \"\$AGENT_MODEL\"' PROMPT_PATH='${AGENT_PROMPT}' '${WORKSPACE_ROOT}/agent_loop.sh'"
 screen -dmS "sqlite-agent-3" bash -c "AGENT_ID=3 AGENT_LABEL=codex AGENT_MODEL=gpt-5.3-codex AGENT_COMMAND='codex exec -c model_reasoning_effort=high --dangerously-bypass-approvals-and-sandbox --model \"\$AGENT_MODEL\" \"\$PROMPT_TEXT\"' PROMPT_PATH='${AGENT_PROMPT}' '${WORKSPACE_ROOT}/agent_loop.sh'"
 screen -dmS "sqlite-agent-4" bash -c "AGENT_ID=4 AGENT_LABEL=codex AGENT_MODEL=gpt-5.3-codex AGENT_COMMAND='codex exec -c model_reasoning_effort=high --dangerously-bypass-approvals-and-sandbox --model \"\$AGENT_MODEL\" \"\$PROMPT_TEXT\"' PROMPT_PATH='${AGENT_PROMPT}' '${WORKSPACE_ROOT}/agent_loop.sh'"
+screen -dmS "sqlite-agent-5" bash -c "AGENT_ID=5 AGENT_LABEL=gemini AGENT_MODEL=gemini-3-pro-preview AGENT_COMMAND='gemini --prompt \"\$PROMPT_TEXT\" --model \"\$AGENT_MODEL\" --yolo' PROMPT_PATH='${AGENT_PROMPT}' '${WORKSPACE_ROOT}/agent_loop.sh'"
+screen -dmS "sqlite-agent-6" bash -c "AGENT_ID=6 AGENT_LABEL=gemini AGENT_MODEL=gemini-3-pro-preview AGENT_COMMAND='gemini --prompt \"\$PROMPT_TEXT\" --model \"\$AGENT_MODEL\" --yolo' PROMPT_PATH='${AGENT_PROMPT}' '${WORKSPACE_ROOT}/agent_loop.sh'"
 
 echo ""
-echo "=== All 4 worker agents launched ==="
+echo "=== All 6 worker agents launched ==="
 echo ""
