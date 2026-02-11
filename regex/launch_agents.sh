@@ -1,18 +1,11 @@
 #!/bin/bash
 # launch_agents.sh — spawns agents in screen sessions
-# Usage: ./launch_agents.sh <num_agents>
+# Usage: ./launch_agents.sh [num_agents]
 
-SCRIPT_DIR="/project/6049267/kyars/server-stuff"
+REGEX_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 NUM_AGENTS=${1:-2}
 
-echo "=== Regex Agent Team Launcher ==="
-
 for i in $(seq 1 "$NUM_AGENTS"); do
-    echo "[launch] Starting agent $i in screen 'agent-$i'..."
-    screen -dmS "agent-$i" bash -c "AGENT_ID=$i \"$SCRIPT_DIR/agent_loop.sh\""
-    echo "[launch] Agent $i running"
+    screen -dmS "agent-$i" bash -c "AGENT_ID=$i \"$REGEX_DIR/agent_loop.sh\""
 done
-
-echo ""
-echo "=== All $NUM_AGENTS agents running ==="
-echo ""
+echo "Launched $NUM_AGENTS agents (screens: agent-1 .. agent-$NUM_AGENTS)"
