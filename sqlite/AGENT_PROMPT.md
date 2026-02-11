@@ -18,7 +18,7 @@ You are building an embedded SQLite-like database engine in Rust.
 4. Test before push:
 - Run `./test.sh --fast` before each push.
 - If behavior changes, add tests in the same commit.
-- Use `sqlite3` as behavioral oracle for SQL semantics/results.
+- Use `sqlite3` as behavioral oracle for SQL semantics/results; normalize when comparing so tests are stable.
 - Keep internal storage/engine invariants owned by this repo's design.
 
 5. Update shared state:
