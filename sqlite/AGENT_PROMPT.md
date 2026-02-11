@@ -18,7 +18,7 @@ You are building an embedded SQLite-like database engine in Rust.
 4. Test before push:
 - Run `./test.sh --fast` before each push.
 - If behavior changes, add tests in the same commit.
-- Use `sqlite3` as behavioral oracle for SQL semantics/results.
+- Use `sqlite3` as behavioral oracle. When comparing results: normalize row order (ORDER BY or sort), NULL handling, float tolerance/format, and error-message normalization.
 - Keep internal storage/engine invariants owned by this repo's design.
 
 5. Update shared state:
@@ -26,10 +26,7 @@ You are building an embedded SQLite-like database engine in Rust.
 - Add important handoff notes in `notes/<topic>.md`.
 - You may update `README.md`, `DESIGN.md`, and `PROGRESS.md` if implementation reality changes; keep updates minimal and in the same commit as related code changes.
 
-Stale-lock prevention:
-- Follow best-practice stale-lock handling.
-- Only remove another agent's lock when there is clear evidence it is stale.
-- If you remove stale locks, include that cleanup in a normal commit and push.
+Stale-lock: only remove another agent's lock if the lock file's mtime is older than 30 minutes and there is no recent commit touching that task (e.g. in the last 30 min). Include any lock cleanup in a normal commit and push.
 
 6. Clean up:
 - Remove your lock file when done.
