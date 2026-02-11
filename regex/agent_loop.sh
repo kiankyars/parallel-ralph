@@ -7,15 +7,18 @@ WORKSPACE_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WORKSPACE="${WORKSPACE_ROOT}/workspace-${AGENT_ID}"
 PROMPT_PATH="${WORKSPACE_ROOT}/AGENT_PROMPT.md"
 
+# Clone if needed
 if [ ! -d "$WORKSPACE/.git" ]; then
     git clone "$REPO" "$WORKSPACE"
+    git checkout -f c592a0534e60db71795863a8e64598f3779afc86
 fi
 
-cd "$WORKSPACE" || exit 1
+cd "$WORKSPACE"
+
 mkdir -p agent_logs current_tasks notes
 
 while true; do
-    git pull --rebase origin main || git pull origin main
+    git pull --rebase origin main 2>/dev/null || git pull origin main
 
     COMMIT=$(git rev-parse --short=6 HEAD)
     LOGFILE="agent_logs/agent_${AGENT_ID}_${COMMIT}_$(date +%s).log"
