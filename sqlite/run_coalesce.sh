@@ -1,7 +1,8 @@
 #!/bin/bash
 # run_coalesce.sh — one-shot agent to coalesce duplicate code and documentation.
 # Usage: from sqlite/ run: ./run_coalesce.sh
-# Uses workspace-coalesce; requires REPO and claude/codex in env.
+# Uses workspace-coalesce; requires REPO and gemini CLI in env.
+# Runs daily via cron at midnight Pacific.
 
 set -u
 
@@ -21,8 +22,6 @@ mkdir -p agent_logs
 LOG="agent_logs/coalesce_$(date +%s).log"
 
 echo "[$(date)] Coalesce agent start"
-claude --dangerously-skip-permissions \
-    -p "$(cat "${COALESCE_PROMPT}")" \
-    --model "claude-opus-4-6" \
+gemini exec --model "gemini-3-flash-preview" "$(cat "${COALESCE_PROMPT}")" \
     >> "${LOG}" 2>&1
 echo "[$(date)] Coalesce agent end (see ${LOG})"

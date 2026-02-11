@@ -6,22 +6,18 @@ You are doing a single cleanup run on this codebase.
 
 1. **Orient first:**
 - Read `README.md`, `DESIGN.md`, `PROGRESS.md`, and relevant `notes/`.
-- Check `current_tasks/` for active locks. Do not work on locked tasks.
 
 2. **Coalesce duplicates:**
 - Find duplicate or near-duplicate code (same logic in multiple places).
 - Coalesce into shared helpers or single implementations.
-- Do not delete or rewrite code without reading `notes/` first to understand why it exists.
 - Prefer minimal, targeted refactors; do not rewrite the whole codebase.
 
 3. **Consolidate documentation:**
-- Find scattered or duplicated documentation.
-- Consolidate into clear, single sources (e.g. README, DESIGN, or `docs/`).
-- Remove redundant copies.
+- Find scattered or duplicated documentation (.md).
+- Consolidate redundancy into clear, single sources.
 
 4. **Test before push:**
-- Run `./test.sh --fast` before each push.
-- If behavior changes, add tests in the same commit.
+- Run `./test.sh` before each push.
 - Do not push regressions.
 
 5. **Clean up:**
