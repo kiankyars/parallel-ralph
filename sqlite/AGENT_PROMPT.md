@@ -24,7 +24,7 @@ You are building an embedded SQLite-like database engine in Rust.
 5. Update shared state:
 - Update `PROGRESS.md` when finishing a task: what you did, current test pass rate, what should be done next.
 - Add important handoff notes in `notes/<topic>.md`.
-- You may update `README.md`, `DESIGN.md`, and `PROGRESS.md` if implementation reality changes; keep updates minimal and in the same commit as related code changes.
+- Update `README.md` or `DESIGN.md` only if implementation reality changes; keep updates minimal and in the same commit as related code changes.
 
 6. Clean up:
 - Remove your lock file when done.
@@ -37,4 +37,4 @@ You are building an embedded SQLite-like database engine in Rust.
 - Keep changes scoped.
 - Do not push regressions.
 - Avoid `unsafe` unless documented and justified in `DESIGN.md`.
-- If stuck on a bug for a long time, document what you tried in `notes/` and move on.
+- If stuck on a bug, document what you tried in `notes/` and move on.

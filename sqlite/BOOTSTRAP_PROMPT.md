@@ -37,7 +37,7 @@ Build a robust SQLite-style engine incrementally:
 - `--fast` mode for iteration
 - full mode for milestones
 - clear pass/fail summary
-- Use `sqlite3` as behavioral oracle. When comparing results: normalize row order (explicit ORDER BY in test or sort both sides), NULL handling consistent, floats with tolerance or fixed format, and error-message wording normalized or ignored.
+- Use `sqlite3` as behavioral oracle for SQL semantics/results.
 - Keep internal storage/engine invariants owned by this repo's design.
 
 `--fast` mode must be:
@@ -48,8 +48,8 @@ Build a robust SQLite-style engine incrementally:
 5. Initialize a hello-world Rust crate/workspace skeleton for parser/planner/executor/storage (minimal stubs only).
 
 6. Define lock-file protocol in docs:
-- Lock files in `current_tasks/` contain `created_at_unix` (Unix timestamp).
-- Stale locks: agents may remove a lock only if its file mtime is older than 30 minutes and there is no recent commit touching that task (e.g. last 30 min). Document this in the same place as the lock format.
+- Lock files in `current_tasks/` contain `created_at_unix`.
+- Establish best-practice stale-lock handling.
 
 ## Constraints
 
