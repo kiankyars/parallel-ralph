@@ -53,6 +53,6 @@ Build a robust SQLite-style engine incrementally:
 
 ## Constraints
 
-- Keep bootstrap focused; do not start database implementation in this run.
-- Commit bootstrap artifacts with clear commit messages.
+- Keep bootstrap minimal; do not start implementation.
+- Commit all bootstrap artifacts in one clear commit.
 - Ensure the repository is in a buildable state before finishing.

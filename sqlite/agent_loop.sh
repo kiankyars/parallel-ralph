@@ -7,9 +7,8 @@
 
 set -u
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO="git@github.com:kiankyars/sqlite.git"
-WORKSPACE_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 AGENT_ID="${AGENT_ID:?AGENT_ID is required}"
 AGENT_LABEL="${AGENT_LABEL:?AGENT_LABEL is required}"
@@ -40,6 +39,8 @@ while true; do
     PROMPT_TEXT="$(cat "${PROMPT_PATH}")"
     export AGENT_MODEL
     export PROMPT_TEXT
+    # Run the agent command in a login shell so it has access to user environment (including models/tools/conda/mamba/etc).
+    # Output (both stdout and stderr) is redirected to a temporary log for error/rate limit detection.
     bash -lc "${AGENT_COMMAND}" > "${TMP_LOG}" 2>&1
 
     EXIT_CODE=$?
