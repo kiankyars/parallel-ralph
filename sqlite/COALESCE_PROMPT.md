@@ -5,7 +5,7 @@ You are doing a cleanup run on this codebase.
 ## Workflow
 
 1. **Orient first:**
-- If working directory is messy, `git reset`.
+- If working directory is messy, `git reset --hard HEAD`.
 - Read `README.md`, `DESIGN.md`, `PROGRESS.md`, and relevant `notes/`.
 
 2. **Coalesce duplicates:**
