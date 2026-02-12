@@ -5,6 +5,7 @@ You are doing a cleanup run on this codebase.
 ## Workflow
 
 1. **Orient first:**
+- If working directory is messy, `git reset`.
 - Read `README.md`, `DESIGN.md`, `PROGRESS.md`, and relevant `notes/`.
 
 2. **Coalesce duplicates:**
@@ -18,13 +19,10 @@ You are doing a cleanup run on this codebase.
 
 4. **Test before push:**
 - Run `./test.sh` before each push.
-- Do not push regressions.
 
 5. **Clean up:**
-- Pull/rebase and push cleanly. If you hit a merge conflict, resolve carefully; read the other agent's changes before resolving.
+- Pull/rebase and push cleanly. If you hit a merge conflict, resolve carefully; read the other agents' changes before resolving.
 
 ## Constraints
 
-- Do not change behavior; run tests and fix any regressions.
-- Prefer moving over rewriting. Leave the repo buildable and tests passing.
-- Keep changes scoped.
+- `./test.sh` must not regress, run tests before cleanup for comparison.
