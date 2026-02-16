@@ -26,12 +26,29 @@ fi
 cd "${BOOTSTRAP_WORKSPACE}" || exit 1
 # Ensure the local repo is up to date with origin/main; try a rebase first, fallback to merge if rebase fails.
 git pull --rebase origin main 2>/dev/null || git pull origin main
+
+# Configure git hook for co-author attribution
+mkdir -p .git/hooks
+cat > .git/hooks/prepare-commit-msg <<EOF
+#!/bin/bash
+case "\$AGENT_LABEL" in
+  codex)
+    echo "Co-authored-by: Codex <codex@local>" >> "\$1"
+    ;;
+  gemini)
+    echo "Co-authored-by: Gemini <gemini@local>" >> "\$1"
+    ;;
+esac
+EOF
+chmod +x .git/hooks/prepare-commit-msg
+
 # Create the directory for bootstrap agent logs if it doesn't exist.
 # The '-p' flag tells mkdir to create parent directories as needed and not to error if the directory already exists.
 mkdir -p "${BOOTSTRAP_LOG_DIR}"
 
 echo "=== SQLite Bootstrap Run ==="
 echo "[bootstrap] Running one bootstrap agent (claude-opus-4-6)..."
+export AGENT_LABEL=claude
 if ! claude --dangerously-skip-permissions \
     -p "$(cat "${BOOTSTRAP_PROMPT}")" \
     --model "claude-opus-4-6" \

@@ -24,6 +24,21 @@ fi
 
 cd "${WORKSPACE}" || exit 1
 
+# Configure git hook for co-author attribution
+mkdir -p .git/hooks
+cat > .git/hooks/prepare-commit-msg <<EOF
+#!/bin/bash
+case "\$AGENT_LABEL" in
+  codex)
+    echo "Co-authored-by: Codex <codex@local>" >> "\$1"
+    ;;
+  gemini)
+    echo "Co-authored-by: Gemini <gemini@local>" >> "\$1"
+    ;;
+esac
+EOF
+chmod +x .git/hooks/prepare-commit-msg
+
 mkdir -p agent_logs
 
 while true; do
@@ -37,6 +52,7 @@ while true; do
     echo "[$(date)] Agent ${AGENT_ID} (${AGENT_LABEL}) start at ${COMMIT}"
 
     PROMPT_TEXT="$(cat "${PROMPT_PATH}")"
+    export AGENT_LABEL
     export AGENT_MODEL
     export PROMPT_TEXT
     # Run the agent command in a login shell so it has access to user environment (including models/tools/conda/mamba/etc).

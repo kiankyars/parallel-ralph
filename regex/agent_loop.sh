@@ -4,6 +4,10 @@
 
 REPO="git@github.com:kiankyars/regex.git"
 WORKSPACE_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+AGENT_ID="${AGENT_ID:?AGENT_ID is required}"
+AGENT_LABEL="${AGENT_LABEL:-claude}"
+
 WORKSPACE="${WORKSPACE_ROOT}/workspace-${AGENT_ID}"
 PROMPT_PATH="${WORKSPACE_ROOT}/AGENT_PROMPT.md"
 
@@ -15,6 +19,21 @@ fi
 
 cd "$WORKSPACE"
 
+# Configure git hook for co-author attribution
+mkdir -p .git/hooks
+cat > .git/hooks/prepare-commit-msg <<EOF
+#!/bin/bash
+case "\$AGENT_LABEL" in
+  codex)
+    echo "Co-authored-by: Codex <codex@local>" >> "\$1"
+    ;;
+  gemini)
+    echo "Co-authored-by: Gemini <gemini@local>" >> "\$1"
+    ;;
+esac
+EOF
+chmod +x .git/hooks/prepare-commit-msg
+
 mkdir -p agent_logs current_tasks notes
 
 while true; do
@@ -25,6 +44,7 @@ while true; do
 
     echo "[$(date)] Agent ${AGENT_ID} starting session at ${COMMIT}"
 
+    export AGENT_LABEL
     claude --dangerously-skip-permissions \
            -p "$(cat "$PROMPT_PATH")" \
            --model claude-opus-4-6 &>> "$LOGFILE"

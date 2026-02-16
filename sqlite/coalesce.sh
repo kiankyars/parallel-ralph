@@ -42,10 +42,26 @@ fi
 cd "${WORKSPACE}" || exit 1
 git pull --rebase origin main 2>/dev/null || git pull origin main
 
+# Configure git hook for co-author attribution
+mkdir -p .git/hooks
+cat > .git/hooks/prepare-commit-msg <<EOF
+#!/bin/bash
+case "\$AGENT_LABEL" in
+  codex)
+    echo "Co-authored-by: Codex <codex@local>" >> "\$1"
+    ;;
+  gemini)
+    echo "Co-authored-by: Gemini <gemini@local>" >> "\$1"
+    ;;
+esac
+EOF
+chmod +x .git/hooks/prepare-commit-msg
+
 mkdir -p agent_logs
 LOG="agent_logs/coalesce_$(date +%s).log"
 
 echo "[$(date)] Coalesce agent start"
+export AGENT_LABEL=gemini
 gemini --prompt "$(cat "${COALESCE_PROMPT}")" --model gemini-3-flash-preview --yolo \
     >> "${LOG}" 2>&1
 echo "[$(date)] Coalesce agent end (see ${LOG})"
